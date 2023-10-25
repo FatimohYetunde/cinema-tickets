@@ -5,15 +5,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import thirdparty.paymentgateway.TicketPaymentService;
 import thirdparty.paymentgateway.TicketPaymentServiceImpl;
 import thirdparty.seatbooking.SeatReservationServiceImpl;
-import thirdparty.paymentgateway.TicketPaymentServiceImpl;
 import uk.gov.dwp.uc.pairtest.domain.TicketTypeRequest;
 import uk.gov.dwp.uc.pairtest.exception.InvalidPurchaseException;
-import java.math.BigDecimal;
-import java.util.*;
-import java.util.stream.Collectors;
+
 public class TicketServiceImpl extends TicketPaymentServiceImpl implements TicketService {
     /**
      * Should only have private methods other than the one below.
@@ -34,8 +30,7 @@ public class TicketServiceImpl extends TicketPaymentServiceImpl implements Ticke
     private void validateNoOfTickets(TicketTypeRequest... ticketTypeRequests) throws InvalidPurchaseException {
         int ticketNo = Arrays.stream(ticketTypeRequests).mapToInt(TicketTypeRequest::getNoOfTickets).sum();
         if (ticketNo > 20) {
-            throw new InvalidPurchaseException(
-                    "Number to tickets exceeds maximum no of tickets allowed which is twenty (20)");
+            throw new InvalidPurchaseException("Number to tickets exceeds maximum no of tickets allowed which is twenty (20)");
         }
     }
 
@@ -62,7 +57,7 @@ public class TicketServiceImpl extends TicketPaymentServiceImpl implements Ticke
         }
         return noOfSeatsAllocated;
     }
-    
+
     private int getTicketPrice(TicketTypeRequest.Type ticketType) {
         int price;
         switch (ticketType) {
